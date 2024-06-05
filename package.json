@@ -3,6 +3,18 @@
   "private": false,
   "version": "0.0.1",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gladesinger/vue3-material.git"
+  },
+  "keywords": [
+    "vue3-material",
+    "material",
+    "material-ui",
+    "vue3",
+    "vue",
+    "vuejs"
+  ],
   "files": [
     "dist",
     "src/components/"
