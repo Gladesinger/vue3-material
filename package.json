@@ -1,19 +1,40 @@
 {
-  "name": "vue3-material",
-  "private": true,
+  "name": "@gladesinger/vue3-material",
+  "private": false,
   "version": "0.0.1",
   "type": "module",
+  "files": [
+    "dist",
+    "src/components/"
+  ],
+  "main": "./dist/vue3-material.umd.cjs",
+  "module": "./dist/vue3-material.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue3-material.js",
+      "require": "./dist/vue3-material.umd.cjs"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client && npm run build:server"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "popper.js": "^1.15.0",
-    "vue": "^3.3.4",
     "date-fns": "^2.30.0",
     "deepmerge": "^4.3.1",
     "fuzzysearch": "^1.0.3",
-    "is-promise": "^4.0.0"
+    "is-promise": "^4.0.0",
+    "popper.js": "^1.15.0",
+    "raf": "^3.4.1",
+    "vue": "^3.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
