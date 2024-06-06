@@ -1,7 +1,7 @@
 {
   "name": "@gladesinger/vue3-material",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "repository": {
     "type": "git",
@@ -18,6 +18,7 @@
   "license": "MIT",
   "files": [
     "dist",
+    "dist/theme",
     "src/base/",
     "src/components/",
     "src/core/",
@@ -35,6 +36,10 @@
     "./dist/style.css": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
+    },
+    "./dist/theme/default.css": {
+      "import": "./dist/theme/default.css",
+      "require": "./dist/theme/default.css"
     }
   },
   "scripts": {
