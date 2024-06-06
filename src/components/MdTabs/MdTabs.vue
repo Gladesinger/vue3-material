@@ -249,7 +249,7 @@ function areEqual (array1, array2) {
         })
       },
       calculateTabPos () {
-        if (this.hasContent) {
+        if (this.hasContent && this.$refs.tabsContainer) {
           const tabElements = this.ours(this.$refs.tabsContainer.querySelectorAll(`.md-tab:nth-child(${this.activeTabIndex + 1})`))
           const tabElement = tabElements.length ? tabElements[0] : null
 
@@ -259,7 +259,6 @@ function areEqual (array1, array2) {
           this.containerStyles = {
             transform: `translate3D(${this.mdIsRtl ? (this.activeTabIndex) * 100 : (-this.activeTabIndex) * 100}%, 0, 0)`
           }
-          
         }
       },
       callResizeFunctions () {
@@ -322,10 +321,13 @@ function areEqual (array1, array2) {
     beforeDestroy () {
       if (this.resizeObserver) {
         this.resizeObserver.disconnect()
+        this.resizeObserver = null
       }
 
       window.removeEventListener('resize', this.callResizeFunctions)
-      this.$refs.navigation.removeEventListener('transitionend', this.setIndicatorStyles)
+       if (this.$refs.navigation) {
+        this.$refs.navigation.removeEventListener('transitionend', this.setIndicatorStyles);
+      }
     }
   })
 </script>

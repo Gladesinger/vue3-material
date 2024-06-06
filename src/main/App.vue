@@ -2,7 +2,7 @@
   
 	<div>
 
-		<md-card md-with-hover>
+		<!-- <md-card md-with-hover>
 			<md-ripple>
 				<md-card-header>
 				<div class="md-title">Card with hover effect</div>
@@ -31,9 +31,9 @@
 		<md-checkbox >
 			<md-tooltip md-delay="300" md-direction="bottom" >this is a tooltip</md-tooltip>
 			this is a checkbox
-		</md-checkbox>
+		</md-checkbox> -->
 
-		<md-tabs @md-changed="changeTab">
+		<md-tabs>
         <md-tab id="tab-home" md-label="Home">
           Home Tab
           <p>Unde provident nemo</p>

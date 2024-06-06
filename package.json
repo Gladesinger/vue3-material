@@ -1,7 +1,7 @@
 {
   "name": "@gladesinger/vue3-material",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
   "repository": {
     "type": "git",
@@ -15,6 +15,7 @@
     "vue",
     "vuejs"
   ],
+  "license": "MIT",
   "files": [
     "dist",
     "src/base/",
@@ -48,6 +49,7 @@
     "is-promise": "^4.0.0",
     "popper.js": "^1.15.0",
     "raf": "^3.4.1",
+    "rollup-plugin-copy": "^3.5.0",
     "vue": "^3.0.0"
   },
   "peerDependencies": {

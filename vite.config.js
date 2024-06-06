@@ -27,6 +27,7 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
+import copy from 'rollup-plugin-copy'
 
 const base = '/'
 
@@ -72,6 +73,13 @@ export default defineConfig({
         // preserveModules: true,
         dir: 'dist'
       },
+      plugins: [
+        copy({
+          targets: [
+            { src: 'src/css/default.css', dest: 'dist/theme' }
+          ]
+        })
+      ]
       // plugins: [
       //   multi({
       //     include: ['src/components/**/*.js'],
