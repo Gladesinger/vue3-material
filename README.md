@@ -12,7 +12,7 @@ Currently converted the following components:
 To install use 
 ```npm i @gladesinger/vue3-material```
 
-Then set up a plugin or import components directly. Example of the plugin for nuxt 3 plugins/vue3-material.js:
+Then set up a plugin or import components directly. Example of the plugin for nuxt 3 ```plugins/vue3-material.js```:
 ```import { defineNuxtPlugin } from '#app';
 import VueMaterial from '@gladesinger/vue3-material';
 import '@gladesinger/vue3-material/dist/style.css';
@@ -21,6 +21,10 @@ import '@gladesinger/vue3-material/dist/theme/default.css';
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(VueMaterial);
 });```
+Then in nuxt.config.ts:
+```plugins: [
+    '~/plugins/vue-material.js'
+],```
 
 Or you can import the components separately:
 ```import { defineNuxtPlugin } from '#app';
