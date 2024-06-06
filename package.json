@@ -1,7 +1,7 @@
 {
   "name": "@gladesinger/vue3-material",
   "private": false,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "repository": {
     "type": "git",
@@ -9,6 +9,7 @@
   },
   "keywords": [
     "vue3-material",
+    "vue-material",
     "material",
     "material-ui",
     "vue3",
