@@ -1,6 +1,6 @@
-//import './base/index.scss'
+import './base/index.scss'
 import MdReactive from './core/utils/MdReactive.js'
-//import MdTheme from './core/MdTheme'
+import MdTheme from './core/MdTheme'
 
 const init = () => {
   let material = new MdReactive({
@@ -60,5 +60,6 @@ export default Vue => {
   if (!Vue.material) {
     Vue.material = init()
     Vue.config.globalProperties.$material = Vue.material
+    Vue.provide('material', Vue.material)
   }
 };

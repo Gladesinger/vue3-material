@@ -1,10 +1,10 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 
 let msColor = null
 let themeColor = null
 let maskIcon = null
 
-export default new Vue({
+const VueTheme = createApp({
   data: () => ({
     prefix: 'md-theme-',
     theme: 'default',
@@ -131,3 +131,5 @@ export default new Vue({
     }
   }
 })
+
+export default VueTheme

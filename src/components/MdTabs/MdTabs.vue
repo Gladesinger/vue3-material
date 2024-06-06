@@ -143,7 +143,6 @@ function areEqual (array1, array2) {
       },
       activeButtonEl (activeButtonEl) {
         this.activeTabIndex = activeButtonEl ? [].indexOf.call(activeButtonEl.parentNode.children, activeButtonEl) : -1;
-        console.log(activeButtonEl.parentNode.childNodes)
       },
       activeTabIndex () {
         this.setIndicatorStyles()

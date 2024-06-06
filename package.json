@@ -17,7 +17,12 @@
   ],
   "files": [
     "dist",
-    "src/components/"
+    "src/base/",
+    "src/components/",
+    "src/core/",
+    "src/theme/",
+    "src/index.js",
+    "src/material.js"
   ],
   "main": "./dist/vue3-material.umd.cjs",
   "module": "./dist/vue3-material.js",

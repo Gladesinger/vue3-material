@@ -2,6 +2,24 @@
   
 	<div>
 
+		<md-card md-with-hover>
+			<md-ripple>
+				<md-card-header>
+				<div class="md-title">Card with hover effect</div>
+				<div class="md-subhead">It also have a ripple</div>
+				</md-card-header>
+
+				<md-card-content>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.
+				</md-card-content>
+
+				<md-card-actions>
+				<md-button>Action</md-button>
+				<md-button>Action</md-button>
+				</md-card-actions>
+			</md-ripple>
+		</md-card>
+
     <md-button class="md-button md-raised md-theme-default md-accent">
 			this is a button
 		</md-button>
@@ -42,28 +60,28 @@
 </template>
 
 <script>
-	import '@/css/vue-material.min.css';
+	// import '@/css/vue-material.min.css';
 	import '@/css/default.css';
 	import '@/main/css/main.css';
 	
-	import MdButton from "@/components/MdButton/MdButton.vue"
-	import MdDatepicker from "@/components/MdDatepicker/MdDatepicker.vue"
-	import MdTooltip from "@/components/MdTooltip/MdTooltip.vue"
+	// import MdButton from "@/components/MdButton/MdButton.vue"
+	// import MdDatepicker from "@/components/MdDatepicker/MdDatepicker.vue"
+	// import MdTooltip from "@/components/MdTooltip/MdTooltip.vue"
 
-	import MdCheckbox from "@/components/MdCheckbox/MdCheckbox.vue"
-	import MdTabs from "@/components/MdTabs/MdTabs.vue"
-	import MdTab from "@/components/MdTabs/MdTab.vue"
+	// import MdCheckbox from "@/components/MdCheckbox/MdCheckbox.vue"
+	// import MdTabs from "@/components/MdTabs/MdTabs.vue"
+	// import MdTab from "@/components/MdTabs/MdTab.vue"
 
 	export default {
 		
-		components: {
-			MdButton,
-			MdDatepicker,
-			MdTooltip,
-			MdCheckbox,
-			MdTabs,
-    		MdTab,
-		},
+		// components: {
+		// 	MdButton,
+		// 	MdDatepicker,
+		// 	MdTooltip,
+		// 	MdCheckbox,
+		// 	MdTabs,
+    	// 	MdTab,
+		// },
 		
 		name: 'app'
 

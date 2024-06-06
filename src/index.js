@@ -11,3 +11,5 @@ let VueMaterial = Vue => {
 VueMaterial.version = '__VERSION__'
 
 export default VueMaterial
+
+export * from './components/index.js'

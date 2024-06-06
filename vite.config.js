@@ -27,7 +27,6 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
-import multi from '@rollup/plugin-multi-entry';
 
 const base = '/'
 

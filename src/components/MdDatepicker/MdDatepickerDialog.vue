@@ -88,6 +88,9 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { inject } from 'vue'
+
   import addMonths from 'date-fns/addMonths/index.js'
   import startOfMonth from 'date-fns/startOfMonth/index.js'
   import subMonths from 'date-fns/subMonths/index.js'
@@ -152,21 +155,30 @@
       currentView: 'day',
       contentStyles: {},
       availableYears: null,
-			locale: {
-				startYear: 1900,
-				endYear: 2099,
-				dateFormat: 'dd-MM-yyyy',
-				days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-				shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-				shorterDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-				months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-				shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
-				shorterMonths: ['J', 'F', 'M', 'A', 'M', 'Ju', 'Ju', 'A', 'Se', 'O', 'N', 'D'],
-				firstDayOfAWeek: 0,
-				cancel: 'Close',
-				confirm: 'Ok'
-			},
+			// locale: {
+			// 	startYear: 1900,
+			// 	endYear: 2099,
+			// 	dateFormat: 'dd-MM-yyyy',
+			// 	days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+			// 	shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+			// 	shorterDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+			// 	months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+			// 	shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+			// 	shorterMonths: ['J', 'F', 'M', 'A', 'M', 'Ju', 'Ju', 'A', 'Se', 'O', 'N', 'D'],
+			// 	firstDayOfAWeek: 0,
+			// 	cancel: 'Close',
+			// 	confirm: 'Ok'
+			// },
     }),
+    setup(){
+      const material = inject('material')
+
+      const locale = computed(() => material.locale)
+
+      return{
+        locale
+      }
+    },
     computed: {
       firstDayOfAWeek () {
         // normalize

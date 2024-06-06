@@ -53,9 +53,15 @@ export default {
         }
       },
       listeners() {
-        return {
-          ...this.$listeners
-        }
+        // return {
+        //   // ...this.$listeners
+        // }
+        return Object.keys(this.$attrs)
+          .filter(key => key.startsWith('on'))
+          .reduce((listeners, key) => {
+            listeners[key] = this.$attrs[key];
+            return listeners;
+        }, {});
       }
     },
     methods: {

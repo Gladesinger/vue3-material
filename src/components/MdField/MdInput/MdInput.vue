@@ -3,7 +3,7 @@
     class="md-input"
     v-model="model"
     v-bind="attributes"
-    
+    v-on="listeners"
     @focus="onFocus"
     @blur="onBlur">
 </template>
@@ -40,6 +40,16 @@
         delete l.input
         return l
       }*/
+      listeners () {
+        var l = Object.keys(this.$attrs)
+          .filter(key => key.startsWith('on'))
+          .reduce((listeners, key) => {
+            listeners[key] = this.$attrs[key];
+            return listeners;
+        }, {});
+        delete l.input
+        return l
+      }
     },
     watch: {
       type (type) {
