@@ -1,13 +1,25 @@
 # vue3-material
 A collection of vue material components (https://github.com/vuematerial/vue-material) converted to vue3. Special thanks to the (https://github.com/mikimoresi/vue3-material) for providing some of the components.
 Currently converted the following components:
+- Avatar
+- Badge
 - Button
 - Card
-- Dialog
+- Content
 - Datepicker
-- Tabs
+- Dialog
+- Divider
+- Empty State
 - Icon
-- Progress
+- List
+- Menu
+- Progress: Bar, Spinner
+- Speed Dial
+- Tabs
+- Toolbar
+- Tooltip
+
+Some of the components don't work with SSR, for example DatePicker, so you should wrap it with ClientOnly if you're using Nuxt.
 
 To install use 
 ```npm i @gladesinger/vue3-material```

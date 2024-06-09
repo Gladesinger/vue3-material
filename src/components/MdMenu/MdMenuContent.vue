@@ -22,7 +22,7 @@
   import MdObserveEvent from '@/core/utils/MdObserveEvent'
   import MdResizeObserver from '@/core/utils/MdResizeObserver'
   import MdPopover from '@/components/MdPopover/MdPopover.vue'
-  import MdFocusTrap from '@/components/MdFocusTrap/MdFocusTrap'
+  import MdFocusTrap from '@/components/MdFocusTrap/MdFocusTrap.js'
   import MdList from '@/components/MdList/MdList.vue'
   import MdContains from '@/core/utils/MdContains'
 

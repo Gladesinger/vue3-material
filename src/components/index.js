@@ -1,6 +1,7 @@
 
 // import MdAutocomplete from './MdAutocomplete'
-// import MdAvatar from './MdAvatar'
+import MdAvatar from './MdAvatar'
+import MdBadge from './MdBadge'
 import MdButton from './MdButton'
 import MdCard from './MdCard'
 // import MdCheckbox from './MdCheckbox'
@@ -11,27 +12,28 @@ import MdDialog from './MdDialog'
 import MdDialogAlert from './MdDialog/MdDialogAlert'
 import MdDialogConfirm from './MdDialog/MdDialogConfirm'
 import MdDialogPrompt from './MdDialog/MdDialogPrompt'
-// import MdDivider from './MdDivider'
+import MdDivider from './MdDivider'
 // import MdElevation from './MdElevation'
-// import MdEmptyState from './MdEmptyState'
+import MdEmptyState from './MdEmptyState'
 // import MdField from './MdField'
 // import MdHighlightText from './MdHighlightText'
 import MdIcon from './MdIcon'
 // import MdLayout from './MdLayout'
-// import MdList from './MdList'
-// import MdMenu from './MdMenu'
+import MdList from './MdList'
+import MdMenu from './MdMenu'
 // import MdRadio from './MdRadio'
 import MdRipple from './MdRipple'
-// import MdSpeedDial from './MdSpeedDial'
+import MdSpeedDial from './MdSpeedDial'
 // import MdSteppers from './MdSteppers'
 import MdTabs from './MdTabs'
-// import MdToolbar from './MdToolbar'
-// import MdTooltip from './MdTooltip'
+import MdToolbar from './MdToolbar'
+import MdTooltip from './MdTooltip'
 import MdProgress from './MdProgress'
 
 export {
   // MdAutocomplete,
-  // MdAvatar,
+  MdAvatar,
+  MdBadge,
   MdButton,
   MdCard,
   // MdCheckbox,
@@ -42,21 +44,21 @@ export {
   MdDialogAlert,
   MdDialogConfirm,
   MdDialogPrompt,
-  // MdDivider,
+  MdDivider,
   // MdElevation,
-  // MdEmptyState,
+  MdEmptyState,
   // MdField,
   // MdHighlightText,
   MdIcon,
   // MdLayout,
-  // MdList,
-  // MdMenu,
+  MdList,
+  MdMenu,
   // MdRadio,
   MdRipple,
-  // MdSpeedDial,
+  MdProgress,
+  MdSpeedDial,
   // MdSteppers,
   MdTabs,
-  MdProgress
-  // MdToolbar,
-  // MdTooltip
+  MdToolbar,
+  MdTooltip
 }

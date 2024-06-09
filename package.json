@@ -1,7 +1,7 @@
 {
   "name": "@gladesinger/vue3-material",
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "repository": {
     "type": "git",
@@ -41,6 +41,22 @@
     "./dist/theme/default.css": {
       "import": "./dist/theme/default.css",
       "require": "./dist/theme/default.css"
+    },
+    "./dist/theme/default-dark.css": {
+      "import": "./dist/theme/default-dark.css",
+      "require": "./dist/theme/default-dark.css"
+    },
+    "./dist/theme/black-green-dark.css": {
+      "import": "./dist/theme/black-green-dark.css",
+      "require": "./dist/theme/black-green-dark.css"
+    },
+    "./dist/theme/black-green-light.css": {
+      "import": "./dist/theme/black-green-light.css",
+      "require": "./dist/theme/black-green-light.css"
+    },
+    "./dist/theme/engine.scss": {
+      "import": "./dist/theme/engine.scss",
+      "require": "./dist/theme/engine.scss"
     }
   },
   "scripts": {
