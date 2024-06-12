@@ -11,9 +11,9 @@
 </template>
 
 <script>
-  import MdComponent from '@/core/MdComponent'
-  import MdUuid from '@/core/utils/MdUuid'
-  import MdFieldMixin from '../MdFieldMixin'
+  import MdComponent from '@/core/MdComponent.js'
+  import MdUuid from '@/core/utils/MdUuid.js'
+  import MdFieldMixin from '../MdFieldMixin.js'
 
   function calculateContentHeight (el, lineHeight) {
     const origHeight = el.style.height

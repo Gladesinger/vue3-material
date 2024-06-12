@@ -4,7 +4,7 @@ import MdAvatar from './MdAvatar'
 import MdBadge from './MdBadge'
 import MdButton from './MdButton'
 import MdCard from './MdCard'
-// import MdCheckbox from './MdCheckbox'
+import MdCheckbox from './MdCheckbox'
 // import MdChips from './MdChips'
 import MdContent from './MdContent'
 import MdDatepicker from './MdDatepicker'
@@ -13,12 +13,12 @@ import MdDialogAlert from './MdDialog/MdDialogAlert'
 import MdDialogConfirm from './MdDialog/MdDialogConfirm'
 import MdDialogPrompt from './MdDialog/MdDialogPrompt'
 import MdDivider from './MdDivider'
-// import MdElevation from './MdElevation'
+import MdElevation from './MdElevation'
 import MdEmptyState from './MdEmptyState'
-// import MdField from './MdField'
+import MdField from './MdField'
 // import MdHighlightText from './MdHighlightText'
 import MdIcon from './MdIcon'
-// import MdLayout from './MdLayout'
+import MdLayout from './MdLayout'
 import MdList from './MdList'
 import MdMenu from './MdMenu'
 // import MdRadio from './MdRadio'
@@ -36,7 +36,7 @@ export {
   MdBadge,
   MdButton,
   MdCard,
-  // MdCheckbox,
+  MdCheckbox,
   // MdChips,
   MdContent,
   MdDatepicker,
@@ -45,12 +45,12 @@ export {
   MdDialogConfirm,
   MdDialogPrompt,
   MdDivider,
-  // MdElevation,
+  MdElevation,
   MdEmptyState,
-  // MdField,
+  MdField,
   // MdHighlightText,
   MdIcon,
-  // MdLayout,
+  MdLayout,
   MdList,
   MdMenu,
   // MdRadio,

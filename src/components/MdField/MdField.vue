@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import MdComponent from '@/core/MdComponent'
+  import MdComponent from '@/core/MdComponent.js'
   import MdClearIcon from '@/core/icons/MdClearIcon.vue'
 	import MdButton from "@/components/MdButton/MdButton.vue"
   import MdPasswordOffIcon from '@/core/icons/MdPasswordOffIcon.vue'

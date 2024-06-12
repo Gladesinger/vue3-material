@@ -1,5 +1,7 @@
 # vue3-material
-A collection of vue material components (https://github.com/vuematerial/vue-material) converted to vue3. Special thanks to the (https://github.com/mikimoresi/vue3-material) for providing some of the components.
+Vue material package converted to vue 3.
+
+The package contains a collection of vue material components (https://github.com/vuematerial/vue-material) converted to vue3. Special thanks to the (https://github.com/mikimoresi/vue3-material) for providing some of the components.
 Currently converted the following components:
 - Avatar
 - Badge
@@ -10,6 +12,7 @@ Currently converted the following components:
 - Dialog
 - Divider
 - Empty State
+- Forms: Checkbox, File, Input & Textarea
 - Icon
 - List
 - Menu

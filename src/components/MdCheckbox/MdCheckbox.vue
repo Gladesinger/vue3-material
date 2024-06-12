@@ -13,9 +13,9 @@
 </template>
 
 <script>
-  import MdComponent from '@/core/MdComponent'
-  import MdCheckboxMixin from '@/components/MdCheckbox/MdCheckboxMixin'
-  import MdUuid from '@/core/utils/MdUuid'
+  import MdComponent from '@/core/MdComponent.js'
+  import MdCheckboxMixin from './MdCheckboxMixin.js'
+  import MdUuid from '@/core/utils/MdUuid.js'
 
   export default new MdComponent({
     name: 'MdCheckbox',
