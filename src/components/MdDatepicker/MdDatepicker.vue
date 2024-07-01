@@ -1,7 +1,7 @@
 <template>
   <md-field :class="['md-datepicker', { 'md-native': !mdOverrideNative }]" :md-clearable="mdClearable" @md-clear="onClear" >
     <md-date-icon class="md-date-icon" @click="toggleDialog" />
-    <md-input :type="type" ref="input" v-model="inputDate" @focus.native="onFocus" @blur.native="onBlur" :pattern="pattern" />
+    <md-input :type="type" ref="input" v-model="inputDate" @focus="onFocus" @blur="onBlur" :pattern="pattern" name="datepicker-input" />
 
     <slot />
 		
@@ -49,7 +49,7 @@ import { inject } from 'vue'
     props: {
       //modelValue: false,
       modelValue: [String, Number, Date],
-      value: [String, Number, Date],
+      // value: [String, Number, Date],
       mdDisabledDates: [Array, Function],
       mdOpenOnFocus: {
         type: Boolean,
@@ -110,8 +110,8 @@ import { inject } from 'vue'
           ? 'text'
           : 'date'
       },
-      dateFormat () {
-        return this.locale.dateFormat || 'yyyy-MM-dd'
+      dateFormat() {
+        return this.locale.dateFormat || 'dd.MM.yyyy';
       },
       modelType () {
         if (this.isModelTypeString) {
@@ -125,16 +125,16 @@ import { inject } from 'vue'
         }
       },
       isModelNull () {
-        return this.value === null || this.value === undefined
+        return this.modelValue === null || this.modelValue === undefined
       },
       isModelTypeString () {
-        return typeof this.value === 'string'
+        return typeof this.modelValue === 'string'
       },
       isModelTypeNumber () {
-        return Number.isInteger(this.value) && this.value >= 0
+        return Number.isInteger(this.modelValue) && this.value >= 0
       },
       isModelTypeDate () {
-        return typeof this.value === 'object' && this.value instanceof Date && isValid(this.value)
+        return typeof this.modelValue === 'object' && this.modelValue instanceof Date && isValid(this.modelValue)
       },
       localString () {
         return this.localDate && format(this.localDate, this.dateFormat)
@@ -146,23 +146,29 @@ import { inject } from 'vue'
         const parsedDate = parse(this.inputDate, this.dateFormat, new Date())
         return parsedDate && isValid(parsedDate) ? parsedDate : null
       },
-      pattern () {
+      pattern() {
         return this.dateFormat.replace(/yyyy|MM|dd/g, match => {
           switch (match) {
-          case 'yyyy':
-            return '[0-9]{4}'
-          case 'MM':
-          case 'dd':
-            return '[0-9]{2}'
+            case 'yyyy':
+              return '[0-9]{4}';
+            case 'MM':
+            case 'dd':
+              return '[0-9]{2}';
           }
-        })
+        });
       }
     },
     watch: {
-			modelValue(value){
-				if(this.inputDate != value) {
-					this.inputDate = value;
-				}
+			modelValue:{
+        immediate: true,
+        handler (value) {
+					
+          this.valueDateToLocalDate()
+          if(this.inputDate != value) {
+            this.inputDate = value;
+          }
+        }
+				
 			},
       inputDate (value) {
         this.inputDateToLocalDate()
@@ -185,13 +191,13 @@ import { inject } from 'vue'
           this.$emit('update:modelValue', this.localNumber)
         }
       },
-      value: {
-        immediate: true,
-        handler () {
+      // value: {
+      //   immediate: true,
+      //   handler () {
 					
-          this.valueDateToLocalDate()
-        }
-      },
+      //     this.valueDateToLocalDate()
+      //   }
+      // },
 			
       mdModelType (type) {
         switch (type) {
@@ -271,20 +277,20 @@ import { inject } from 'vue'
         if (this.isModelNull) {
           this.localDate = null
         } else if (this.isModelTypeNumber) {
-          this.localDate = new Date(this.value)
+          this.localDate = new Date(this.modelValue)
         } else if (this.isModelTypeDate) {
-          this.localDate = this.value
+          this.localDate = this.modelValue
         } else if (this.isModelTypeString) {
-          let parsedDate = parse(this.value, this.dateFormat, new Date())
+          let parsedDate = parse(this.modelValue, this.dateFormat, new Date())
 
           if (isValid(parsedDate)) {
-            this.localDate = parse(this.value, this.dateFormat, new Date())
+            this.localDate = parse(this.modelValue, this.dateFormat, new Date())
 						
           } else {
-           	console.log(`The datepicker value is not a valid date. Given value: ${this.value}, format: ${this.dateFormat}`)
+           	console.log(`The datepicker value is not a valid date. Given value: ${this.modelValue}, format: ${this.dateFormat}`)
           }
         } else {
-          console.log(`The datepicker value is not a valid date. Given value: ${this.value}`)
+          console.log(`The datepicker value is not a valid date. Given value: ${this.modelValue}`)
         }
 				
       },
