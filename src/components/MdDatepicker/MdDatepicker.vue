@@ -1,28 +1,30 @@
 <template>
   <md-field :class="['md-datepicker', { 'md-native': !mdOverrideNative }]" :md-clearable="mdClearable" @md-clear="onClear" >
     <md-date-icon class="md-date-icon" @click="toggleDialog" />
-    <md-input :type="type" ref="input" v-model="inputDate" @focus="onFocus" @blur="onBlur($event)" :pattern="pattern" />
+    <md-input :type="type" ref="input" v-model="inputDate" @focus.native="onFocus" @blur.native="onBlur" :pattern="pattern" />
 
     <slot />
 		
     <keep-alive>
       <md-datepicker-dialog
         v-if="showDialog"
+        ref="mdRef"
         v-model:mdDate="localDate"
         :md-disabled-dates="mdDisabledDates"
         :mdImmediately="mdImmediately"
-				
         @mdClosed="toggleDialog"
+        :md-placement="mdPlacement"
       />
     </keep-alive>
 
-    <md-overlay class="md-datepicker-overlay" md-fixed :md-active="showDialog" @click="toggleDialog" />
+    <md-overlay class="md-datepicker-overlay" md-fixed :md-active="showDialog" @click="toggleDialog(false)" />
   </md-field>
 </template>
 
 <script>
-  
-	
+import { computed } from 'vue'
+import { inject } from 'vue'
+
   import format from 'date-fns/format/index.js'
   import parse from 'date-fns/parse/index.js'
   import isValid from 'date-fns/isValid/index.js'
@@ -45,12 +47,17 @@
       MdDatepickerDialog
     },
     props: {
-			
+      //modelValue: false,
+      modelValue: [String, Number, Date],
       value: [String, Number, Date],
       mdDisabledDates: [Array, Function],
       mdOpenOnFocus: {
         type: Boolean,
         default: true
+      },
+      mdCloseOnBlur: {
+        type: Boolean,
+        default: false
       },
       mdOverrideNative: {
         type: Boolean,
@@ -73,7 +80,10 @@
         type: Boolean,
         default: true
       },
-			modelValue: false,
+      mdPlacement: {
+        type: String,
+        default: 'bottom-start'
+      }
     },
     data: () => ({
       showDialog: false,
@@ -81,18 +91,27 @@
       inputDate: '',
       // Date for real value
       localDate: null
-
-			
     }),
+    setup(){
+      const material = inject('material')
+
+      const locale = computed(() => material.locale)
+
+      return{
+        locale
+      }
+    },
     computed: {
-      
+      // locale () {
+      //   return this.$material.locale
+      // },
       type () {
         return this.mdOverrideNative
           ? 'text'
           : 'date'
       },
       dateFormat () {
-        return 'dd/MM/yyyy';
+        return this.locale.dateFormat || 'yyyy-MM-dd'
       },
       modelType () {
         if (this.isModelTypeString) {
@@ -144,7 +163,6 @@
 				if(this.inputDate != value) {
 					this.inputDate = value;
 				}
-				
 			},
       inputDate (value) {
         this.inputDateToLocalDate()
@@ -195,11 +213,11 @@
       }
     },
     methods: {
-      toggleDialog () {
-				
+      toggleDialog (newState = null) {
 				var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
         if (!isFirefox || this.mdOverrideNative) {
-          this.showDialog = !this.showDialog;
+          this.showDialog = newState === null ? !this.showDialog : newState
+          //this.showDialog = !this.showDialog;
           if (this.showDialog) {
             this.$emit('md-opened')
           } else {
@@ -209,22 +227,37 @@
           this.$refs.input.$el.click()
         }
       },
-			onBlur (event) {
-				
-				if(event && !event.relatedTarget || !event) {
-        	this.showDialog = false;
-					this.$emit('md-closed');
-				}
-				
-        
-        
-      },
+			// onBlur (event) {
+			// 	if(event && !event.relatedTarget || !event) {
+      //   	this.showDialog = false;
+			// 		this.$emit('md-closed');
+			// 	}
+      // },
       onFocus () {
         if (this.mdOpenOnFocus ) {
-					
-          this.toggleDialog()
+          this.toggleDialog(true)
         }
       },
+      // onBlur(event){
+      //   if (this.mdCloseOnBlur && event && !event.relatedTarget || !event) {
+      //     this.toggleDialog(false)
+      //   }
+      // },
+      onBlur(e){
+        if (this.mdCloseOnBlur) {
+          const mdRefElement = this.$refs.mdRef.$el
+          const relatedTarget = e.relatedTarget
+
+          if (!mdRefElement.contains(relatedTarget)) {
+            this.toggleDialog(false)
+          }
+        }
+      },
+      // onFocusOut (event) {
+      //   if (this.mdCloseOnBlur && event && !event.relatedTarget || !event) {
+      //     this.toggleDialog(false)
+      //   }
+      // },
       inputDateToLocalDate () {
         if (this.inputDate) {
           if (this.parsedInputDate) {

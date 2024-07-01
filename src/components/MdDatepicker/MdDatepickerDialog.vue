@@ -139,12 +139,15 @@ import { inject } from 'vue'
 			MdContent
     },
     props: {
-			
       mdDate: Date,
       mdDisabledDates: [Array, Function],
       mdImmediately: {
         type: Boolean,
         default: false
+      },
+      mdPlacement: {
+        type: String,
+        default: 'bottom-start'
       }
     },
     data: () => ({
@@ -190,10 +193,15 @@ import { inject } from 'vue'
         firstDayOfAWeek += firstDayOfAWeek < 0 ? daysInAWeek : 0
         return firstDayOfAWeek
       },
-      
+      filteredShorterDays () {
+        const days = this.locale.shorterDays
+        const first = this.firstDayOfAWeek
+        return [...days.slice(first), ...days.slice(0, first)]
+      },
       popperSettings () {
         return {
-          placement: 'bottom-start',
+          //placement: 'bottom-start',
+          placement: this.mdPlacement,
           modifiers: {
             keepTogether: {
               enabled: true
@@ -354,7 +362,7 @@ import { inject } from 'vue'
 
         if (this.mdImmediately) {
           this.$emit('update:mdDate', this.selectedDate)
-          //this.closeDialog()
+          this.closeDialog()
         }
       },
       closeDialog () {

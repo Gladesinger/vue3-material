@@ -39,7 +39,8 @@
         return this.mdRipple && !this.disabled
       },
       isRouterLink () {
-        return this.$router && this.to
+        // return this.$router && this.to
+        return this.to
       }
     },
     render () {
@@ -91,6 +92,7 @@
 				}
 
       }
+
       let tag = 'button'
 			if(!this.nolink) {
 				if (this.href) {

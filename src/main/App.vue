@@ -22,18 +22,20 @@
 
     <md-button class="md-button md-raised md-theme-default md-accent">
 			this is a button
-		</md-button>
+		</md-button> -->
 
-		<md-datepicker  :md-immediately="true" >
-      <label>Datepicker</label>	
-    </md-datepicker>	
+		<md-datepicker v-model="valuePicker" :md-disabled-dates="disabledDates" @md-closed="closedPicker" @md-opened="openedPicker" :md-immediately="true" ref="MdDatepicker">
+			<label>Datepicker</label>	
+		</md-datepicker>
 
-		<md-checkbox >
+		{{ valuePicker }}
+
+		<!-- <md-checkbox >
 			<md-tooltip md-delay="300" md-direction="bottom" >this is a tooltip</md-tooltip>
 			this is a checkbox
 		</md-checkbox> -->
 
-		<md-tabs>
+		<!-- <md-tabs>
         <md-tab id="tab-home" md-label="Home">
           Home Tab
           <p>Unde provident nemo</p>
@@ -53,13 +55,14 @@
           Favorites tab
           <p>Maiores, dolorum. Beatae, optio tempore fuga odit aperiam velit, consequuntur magni inventore sapiente alias sequi odio qui harum dolorem sunt quasi corporis.</p>
         </md-tab>
-      </md-tabs>
+      </md-tabs> -->
 		
   </div>
   
 </template>
 
 <script>
+import { format as formatDateFns } from 'date-fns';
 	// import '@/css/vue-material.min.css';
 	import '@/css/default.css';
 	import '@/main/css/main.css';
@@ -83,9 +86,49 @@
     	// 	MdTab,
 		// },
 		
-		name: 'app'
-
-		
+		name: 'app',
+		data() {
+			let date = this.getCurrentDate()
+			return {
+				dataValue: "",
+				valuePicker: date,
+				// valuePicker: "",
+				errorVisible: false,
+				focused: false,
+				succesBirthday: false,
+				// instanceCalendar: null
+			}
+		},
+		mounted(){
+			this.$material.locale.dateFormat = 'dd.MM.yyyy'
+		},
+		methods:{
+			disabledDates(datePicker) {
+				const day = datePicker.getDate()
+				const year = datePicker.getFullYear()
+				const month = datePicker.getMonth()
+				const currentDate = new Date()
+				const currentDay = currentDate.getDate()
+				const currentMonth = currentDate.getMonth()
+				const currentYear = currentDate.getFullYear()
+				return (year == currentYear &&
+						((month +1) > (currentMonth + 1) || ( (month +1) == (currentMonth + 1) && day > currentDay )) || year > currentYear)
+			},
+			openedPicker() {
+				if (!this.succesBirthday && this.dataValue !== "") {
+					this.dataValue = this.valuePicker
+				}
+			},
+			closedPicker() {
+				// this.dataValue = this.valuePicker
+			},
+			getCurrentDate() {
+				let date = new Date()
+				// console.log("formatDateFns", formatDateFns(date, 'dd.MM.yyyy'))
+				// return date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear()
+				return formatDateFns(date, 'dd.MM.yyyy')
+			},
+		}
 	}
 
 

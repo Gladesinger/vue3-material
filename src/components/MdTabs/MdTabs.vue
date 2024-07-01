@@ -207,7 +207,7 @@ function areEqual (array1, array2) {
         }
       },
       setActiveButtonEl () {
-        this.activeButtonEl = this.$refs.navigation.querySelector('.md-tab-nav-button.md-active')
+        this.activeButtonEl = this.$refs.navigation?.querySelector('.md-tab-nav-button.md-active')
       },
       setActiveTabByIndex (index) {
         this.activeTab = this.orderedIds[index]
