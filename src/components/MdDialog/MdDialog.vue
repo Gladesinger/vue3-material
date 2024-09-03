@@ -108,9 +108,6 @@
 			},
 		},
 		methods: {
-			test() {
-				console.log('hh')
-			},
 			closeDialog() {
 				//console.log(this)
 				//this.$emit("update:mdActive", false);

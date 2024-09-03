@@ -27,7 +27,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-family: Roboto, 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  @extend .md-body-1;
+  // @extend .md-body-1;
 }
 
 
@@ -45,21 +45,21 @@ a:not(.md-button) {
  * Overrides - Apply fluid media styles
  */
 
-audio,
-img,
-object,
-embed,
-canvas,
-video,
-iframe {
-  max-width: 100%;
-  font-style: italic;
-  vertical-align: middle;
+// audio,
+// img,
+// object,
+// embed,
+// canvas,
+// video,
+// iframe {
+//   max-width: 100%;
+//   font-style: italic;
+//   vertical-align: middle;
 
-  &:not(.md-image) {
-    height: auto;
-  }
-}
+//   &:not(.md-image) {
+//     height: auto;
+//   }
+// }
 
 
 /**

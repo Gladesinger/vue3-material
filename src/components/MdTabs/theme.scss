@@ -47,9 +47,9 @@
       }
     }
   
-    .md-tabs-indicator {
-      @include md-theme-property(background-color, $indicator, $primary);
-    }
+    // .md-tabs-indicator {
+    //   @include md-theme-property(background-color, $indicator, $primary);
+    // }
   }
   
   .md-tabs {

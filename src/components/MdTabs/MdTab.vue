@@ -6,9 +6,9 @@
 
 <script>
 import MdUuid from '@/core/utils/MdUuid'
-  import MdRouterLink from '@/core/mixins/MdRouterLink/MdRouterLink'
-  import MdObserveElement from '@/core/utils/MdObserveElement'
-  import MdRouterLinkProps from '@/core/utils/MdRouterLinkProps'
+import MdRouterLink from '@/core/mixins/MdRouterLink/MdRouterLink'
+import MdObserveElement from '@/core/utils/MdObserveElement'
+import MdRouterLinkProps from '@/core/utils/MdRouterLinkProps'
 
 export default {
     name: 'MdTab',
@@ -22,6 +22,7 @@ export default {
       mdDisabled: Boolean,
       mdLabel: [String, Number],
       mdIcon: String,
+      mdOnClick: Function,
       mdTemplateData: {
         type: Object,
         default: () => ({})
@@ -29,7 +30,8 @@ export default {
     },
     inject: ['MdTabs'],
     data: () => ({
-      observer: null
+      observer: null,
+      hasContent: null
     }),
     watch: {
       $props: {
@@ -66,29 +68,70 @@ export default {
     },
     methods: {
       setTabContent () {
-        this.$set(this.MdTabs.items.get(this.id), 'hasContent', !!this.$slots.default)
+        const tab = this.MdTabs.items.get(this.id);
+        if (tab) {
+          tab.hasContent = !!this.$slots.default;
+        }
+
+        //this.$set(this.MdTabs.items.get(this.id), 'hasContent', !!this.$slots.default)
       },
       setupObserver () {
         this.observer = MdObserveElement(this.$el, {
           childList: true
         }, this.setTabContent)
       },
-      setTabData () {
-        // MdTabs does not know the order of tabs, as tabs are in a slot: store IDs in the DOM: DOM elements are ordered
+      // setTabData () {
+      //   // MdTabs does not know the order of tabs, as tabs are in a slot: store IDs in the DOM: DOM elements are ordered
+      //   this.$el.mdTabIdAsObject = this.id
+
+      //   // new Map() because Map is not reactive in VueJs 2
+      //   this.MdTabs.items = new Map(this.MdTabs.items.set(this.id, {
+      //     id: this.id,
+      //     hasContent: !!this.$slots.default,
+      //     label: this.mdLabel,
+      //     icon: this.mdIcon,
+      //     disabled: this.mdDisabled,
+      //     data: this.mdTemplateData,
+      //     props: this.getPropValues(),
+      //     events: this.$listeners
+      //   }))
+      // },
+      setTabData() {
+        
         this.$el.mdTabIdAsObject = this.id
 
-        // new Map() because Map is not reactive in VueJs 2
-        this.MdTabs.items = new Map(this.MdTabs.items.set(this.id, {
+        const tab = this.MdTabs.items.get(this.id);
+        const newTabData = {
           id: this.id,
           hasContent: !!this.$slots.default,
           label: this.mdLabel,
           icon: this.mdIcon,
           disabled: this.mdDisabled,
+          onClick: this.mdOnClick,
+          data: this.mdTemplateData,
+          props: this.getPropValues(),
+          events: this.$listeners
+        };
+
+        // Сравните старые и новые данные перед установкой, чтобы избежать циклических обновлений
+        if (JSON.stringify(tab) !== JSON.stringify(newTabData)) {
+          this.MdTabs.items = new Map(this.MdTabs.items.set(this.id, {
+          id: this.id,
+          hasContent: !!this.$slots.default,
+          label: this.mdLabel,
+          icon: this.mdIcon,
+          disabled: this.mdDisabled,
+          onClick: this.mdOnClick,
           data: this.mdTemplateData,
           props: this.getPropValues(),
           events: this.$listeners
         }))
-      },
+      }
+          // this.MdTabs.items = new Map(this.MdTabs.items.set(this.id, newTabData))
+        },
+
+        
+      // },
       getPropValues () {
         const propNames = Object.keys(this.$options.props)
         const ignoredProps = ['id', 'mdLabel', 'mdDisabled', 'mdTemplateData']
@@ -115,7 +158,7 @@ export default {
       this.setupObserver()
       this.setTabData()
     },
-    beforeDestroy () {
+    beforeUnmount () {
       if (this.observer) {
         this.observer.disconnect()
       }

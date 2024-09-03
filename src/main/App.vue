@@ -24,39 +24,56 @@
 			this is a button
 		</md-button> -->
 
-		<md-datepicker v-model="valuePicker" :md-disabled-dates="disabledDates" @md-closed="closedPicker" @md-opened="openedPicker" :md-immediately="true" ref="MdDatepicker">
+		<!-- <md-datepicker v-model="valuePicker" :md-disabled-dates="disabledDates" @md-closed="closedPicker" @md-opened="openedPicker" :md-immediately="true" ref="MdDatepicker">
 			<label>Datepicker</label>	
 		</md-datepicker>
 
-		{{ valuePicker }}
+		{{ valuePicker }} -->
 
 		<!-- <md-checkbox >
 			<md-tooltip md-delay="300" md-direction="bottom" >this is a tooltip</md-tooltip>
 			this is a checkbox
 		</md-checkbox> -->
 
-		<!-- <md-tabs>
-        <md-tab id="tab-home" md-label="Home">
-          Home Tab
-          <p>Unde provident nemo</p>
-        </md-tab>
+		<md-tabs>
+			<template v-slot:md-tab="{ tab }">
+				<slot>
+					<span class="show-span">{{ tab.label }}
+						<sup class="badge" v-if="tab.data.badge">{{ tab.data.badge }}</sup>
+					</span>
+				</slot>
+			</template>
 
-        <md-tab id="tab-pages" md-label="Pages">
-          Pages tab
-          <p>Unde provident nemo reiciendis officia, possimus repellendus. Facere dignissimos dicta quis rem. Aliquam aspernatur dolor atque nisi id deserunt laudantium quam repellat.</p>
-        </md-tab>
+			<md-tab id="tab-home" md-label="Home" :md-template-data="{ badge:num }">
+				{{ num }}
+				Home Tab
+				<p>Unde provident nemo</p>
+			</md-tab>
 
-        <md-tab id="tab-posts" md-label="Posts">
-          Posts tab
-          <p>Qui, voluptas repellat impedit ducimus earum at ad architecto consectetur perferendis aspernatur iste amet ex tempora animi, illum tenetur quae assumenda iusto.</p>
-        </md-tab>
+			<md-tab id="tab-pages" md-label="Pages">
+				Pages tabs
+				<p>Unde provident nemo reiciendis officia, possimus repellendus. Facere dignissimos dicta quis rem. Aliquam aspernatur dolor atque nisi id deserunt laudantium quam repellat.</p>
+				<p>Unde provident nemo reiciendis officia, possimus repellendus. Facere dignissimos dicta quis rem. Aliquam aspernatur dolor atque nisi id deserunt laudantium quam repellat.</p>
+				<p>Unde provident nemo reiciendis officia, possimus repellendus. Facere dignissimos dicta quis rem. Aliquam aspernatur dolor atque nisi id deserunt laudantium quam repellat.</p>
+				<p>Unde provident nemo reiciendis officia, possimus repellendus. Facere dignissimos dicta quis rem. Aliquam aspernatur dolor atque nisi id deserunt laudantium quam repellat.</p>
+				<p>Unde provident nemo reiciendis officia, possimus repellendus. Facere dignissimos dicta quis rem. Aliquam aspernatur dolor atque nisi id deserunt laudantium quam repellat.</p>
+			</md-tab>
 
-        <md-tab id="tab-favorites" md-label="Favorites">
-          Favorites tab
-          <p>Maiores, dolorum. Beatae, optio tempore fuga odit aperiam velit, consequuntur magni inventore sapiente alias sequi odio qui harum dolorem sunt quasi corporis.</p>
-        </md-tab>
-      </md-tabs> -->
-		
+			<md-tab id="tab-posts" md-label="Posts" :key="num">
+				Posts tab
+				<p>Qui, voluptas repellat impedit ducimus earum at ad architecto consectetur perferendis aspernatur iste amet ex tempora animi, illum tenetur quae assumenda iusto.</p>
+			</md-tab>
+
+			<md-tab id="tab-favorites" md-label="Favorites">
+				Favorites tab
+				<p>Maiores, dolorum. Beatae, optio tempore fuga odit aperiam velit, consequuntur magni inventore sapiente alias sequi odio qui harum dolorem sunt quasi corporis.</p>
+			</md-tab>
+
+			<md-tab v-if="num > 0" :md-on-click="test" id="tab-test" md-label="test">
+				TEST	
+			</md-tab>
+		</md-tabs>
+		<button @click="change">Change</button>
   </div>
   
 </template>
@@ -96,6 +113,7 @@ import { format as formatDateFns } from 'date-fns';
 				errorVisible: false,
 				focused: false,
 				succesBirthday: false,
+				num: 0
 				// instanceCalendar: null
 			}
 		},
@@ -103,6 +121,13 @@ import { format as formatDateFns } from 'date-fns';
 			this.$material.locale.dateFormat = 'dd.MM.yyyy'
 		},
 		methods:{
+			test(){
+				console.log('test')
+			},
+			change(){
+				//tetss
+				this.num++
+			},
 			disabledDates(datePicker) {
 				const day = datePicker.getDate()
 				const year = datePicker.getFullYear()

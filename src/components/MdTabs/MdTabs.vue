@@ -2,7 +2,7 @@
   <div class="md-tabs" :class="[tabsClasses, $mdActiveTheme]">
     <div class="md-tabs-navigation" :class="navigationClasses" ref="navigation">
       <md-button
-        v-for="({ id, label, props, icon, disabled, data, events }, index) in orderedItems"
+        v-for="({ id, label, props, icon, disabled, onClick, data, events }, index) in orderedItems"
         :key="index"
         class="md-tab-nav-button"
         :class="{
@@ -12,7 +12,7 @@
         :disabled="disabled"
         v-bind="props"
         v-on="events ? events : {}"
-        @click="setActiveTab(id)">
+        @click="onClick ? onClick() : setActiveTab(id)">
         <slot name="md-tab" :tab="{ label, icon, data }" v-if="$slots['md-tab']"></slot>
 
         <template v-else>
@@ -86,6 +86,7 @@ function areEqual (array1, array2) {
     },
     data: () => ({
       resizeObserver: null,
+      resizeObserver2: null,
       activeTab: null,
       activeTabIndex: 0,
       indicatorStyles: {},
@@ -109,7 +110,13 @@ function areEqual (array1, array2) {
     },
     computed: {
       orderedItems () {
-        return this.orderedIds.map(tabId => this.MdTabs.items.get(tabId))
+        const res = this.orderedIds
+        .map(tabId => {
+          return this.MdTabs.items.get(tabId)}
+        )
+        .filter(item => item !== undefined);
+        // return this.orderedIds.map(tabId => this.MdTabs.items.get(tabId))
+        return res
       },
       tabsClasses () {
         return {
@@ -129,9 +136,11 @@ function areEqual (array1, array2) {
       MdTabs: {
         deep: true,
         handler () {
+          
           this.recomputeOrderedIds()
-          this.setHasContent()
+          //this.setHasContent()
           this.tryKeepCurrentTab()
+          this.callResizeFunctions()
         }
       },
       activeTab (tabId) {
@@ -218,7 +227,7 @@ function areEqual (array1, array2) {
         }
       },
       setHasContent () {
-        this.hasContent = this.orderedItems.some(item => item.hasContent)
+        this.hasContent = this.orderedItems.some(item => item?.hasContent)
       },
       setIndicatorStyles () {
         raf(() => {
@@ -249,40 +258,77 @@ function areEqual (array1, array2) {
         })
       },
       calculateTabPos () {
-        if (this.hasContent && this.$refs.tabsContainer) {
-          const tabElements = this.ours(this.$refs.tabsContainer.querySelectorAll(`.md-tab:nth-child(${this.activeTabIndex + 1})`))
-          const tabElement = tabElements.length ? tabElements[0] : null
+        this.$nextTick(() => {
+          try{
+              if (this.hasContent && this.$refs.tabsContainer) {
+                const tabElements = this.ours(this.$refs.tabsContainer.querySelectorAll(`.md-tab:nth-child(${this.activeTabIndex + 1})`))
+                const tabElement = tabElements.length ? tabElements[0] : null
+                // Проверка видимости
+                if (tabElement && tabElement.offsetParent !== null) {
+                  this.contentStyles = {
+                    height: `${tabElement.offsetHeight}px`
+                  };
+                } else {
+                  this.contentStyles = {
+                    height: '0px'
+                  };
+                }
 
-          this.contentStyles = {
-            height: tabElement ? `${tabElement.offsetHeight}px` : 0
+                this.containerStyles = {
+                  transform: `translate3D(${this.mdIsRtl ? (this.activeTabIndex) * 100 : (-this.activeTabIndex) * 100}%, 0, 0)`
+                };
+              }
+            }
+          catch(err){
+            console.log(err)
           }
-          this.containerStyles = {
-            transform: `translate3D(${this.mdIsRtl ? (this.activeTabIndex) * 100 : (-this.activeTabIndex) * 100}%, 0, 0)`
-          }
-        }
+        });
       },
       callResizeFunctions () {
+        this.setHasContent ()
         this.setIndicatorStyles()
         this.calculateTabPos()
       },
-      setupObservers () {
-        this.resizeObserver = MdObserveElement(this.$el.querySelector('.md-tabs-content'), {
-          childList: true,
-          characterData: true,
-          subtree: true
-        }, () => {
-          this.callResizeFunctions()
-        })
 
-        window.addEventListener('resize', this.callResizeFunctions)
+      setupObservers () {
+        try{
+          this.resizeObserver = MdObserveElement(this.$el.querySelector('.md-tabs-content'), {
+            childList: true,
+            characterData: true,
+            subtree: true
+          }, () => {
+            this.callResizeFunctions()
+          })
+  
+          if (window.ResizeObserver) {
+            this.resizeObserver2 = new ResizeObserver((entries) => {
+              entries.forEach(entry => {
+                // Вызовите функцию обновления для каждого элемента, который изменил размер
+                this.callResizeFunctions();
+              });
+            });
+  
+            // Начинаем наблюдение за изменениями размеров элементов
+            const targetElement = this.$el.querySelector('.md-tabs-content');
+            if (targetElement) {
+              this.resizeObserver2.observe(targetElement);
+            }
+          }
+  
+          window.addEventListener('resize', this.callResizeFunctions)
+        }catch{}
       },
       recomputeOrderedIds () {
-        const orderedIds = this.ours(this.$refs.tabsContainer.querySelectorAll('.md-tab'))
-          .map(tabElement => tabElement.mdTabIdAsObject)
-
-        // Do not force VueJs to rerender the view and us to recompute everything if the change event was not about tabs
-        if (!areEqual(this.orderedIds, orderedIds)) {
-          this.orderedIds = orderedIds
+        if(this.$refs.tabsContainer){
+          // const orderedIds = this.ours(this.$refs.tabsContainer.querySelectorAll('.md-tab'))
+          //   .map(tabElement => tabElement.mdTabIdAsObject)
+          
+          const orderedIds = this.ours(this.$refs.tabsContainer.querySelectorAll('.md-tab'))
+            .map(tabElement => tabElement.mdTabIdAsObject ?? tabElement.id)
+          // Do not force VueJs to rerender the view and us to recompute everything if the change event was not about tabs
+          if (!areEqual(this.orderedIds, orderedIds)) {
+            this.orderedIds = orderedIds
+          }
         }
       },
       /**
@@ -290,13 +336,17 @@ function areEqual (array1, array2) {
        * @return only the md-tab elements that are owned by this md-tabs
        */
       ours (tabElements) {
-        return [].filter.call(tabElements, tabElement => tabElement.parentNode === this.$refs.tabsContainer)
+        return [].filter.call(tabElements, tabElement => { 
+          return tabElement.parentNode === this.$refs.tabsContainer })
       }
     },
     created () {
       this.setIndicatorStyles = MdThrottling(this.setIndicatorStyles, 300)
       this.activeTab = this.mdActiveTab
     },
+    // updated(){
+    //   this.callResizeFunctions()
+    // },
     mounted () {
       this.setupObservers()
 
@@ -318,10 +368,14 @@ function areEqual (array1, array2) {
 
       this.$refs.navigation.addEventListener('transitionend', this.setIndicatorStyles)
     },
-    beforeDestroy () {
+    beforeUnmount () {
       if (this.resizeObserver) {
         this.resizeObserver.disconnect()
         this.resizeObserver = null
+      }
+      if (this.resizeObserver2) {
+        this.resizeObserver2.disconnect()
+        this.resizeObserver2 = null
       }
 
       window.removeEventListener('resize', this.callResizeFunctions)
